@@ -7,8 +7,8 @@ contract GoodsInfo {
    uint goodsType;
    string name;
    address owner;
-   string description; 
-    
+   string description;
+
 
  // Constructor
    function GoodsInfo (uint goodsTypeP, string nameP, string descriptionP,address ownerP){
@@ -18,6 +18,14 @@ contract GoodsInfo {
      description = descriptionP;
    }
 
+   function getData() constant returns (uint goodsTypeResult, string nameResult, address ownerResult, string descriptionResult )
+   {
+     goodsTypeResult = goodsType;
+     nameResult = name;
+     ownerResult =owner;
+     descriptionResult = description;
+     return;
+   }
 
    function remove() {
      if (msg.sender == owner){
@@ -30,7 +38,7 @@ contract GoodsInfo {
    }
 
    function getGoodsType () returns (uint goodsType ) {
-	return goodsType;
+	    return goodsType;
    }
 
    function getDescription () returns (string description) {
@@ -51,12 +59,12 @@ contract Goods is Errors, EventTracker {
 
      uint goodsCount=0;
 
-     mapping (address => GoodsHolder) goods; 
+     mapping (address => GoodsHolder) goods;
 
      struct GoodsHolder {
-	 bool valid; 
+	 bool valid;
 	 address addrInfo;
-     } 
+     }
 
      function Goods () {
          goodsCount=0;
@@ -71,8 +79,8 @@ contract Goods is Errors, EventTracker {
 
 	GoodsInfo gi = new GoodsInfo (goodsType,name, description, msg.sender);
         address uid =  address (gi);
-        goods[uid].addrInfo  =  uid; 
-         goods[uid].valid = true;	
+        goods[uid].addrInfo  =  uid;
+         goods[uid].valid = true;
         return uid;
      }
 

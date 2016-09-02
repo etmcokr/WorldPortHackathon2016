@@ -30,8 +30,21 @@ router.get('/:address', function(req, res, next) {
     console.log("get Address : " + address);
     var goodInfo = blockchain.getGoodInfo(address);
     console.log("Found goodInfo: " + goodInfo);
-    res.json(goodInfo);
-
+    goodInfo.getData(function(error, data) {
+        if (error) {
+            console.log("chips Error: " + error);
+            res.json(error);
+        } else {
+            console.log("get Data: " + JSON.stringify(data));
+            var result = {
+                name: data[1],
+                goodtype: data[0],
+                owner: data[2],
+                description: data[3]
+            };
+            res.json(result);
+        }
+    });
 });
 
 
