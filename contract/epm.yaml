@@ -1,0 +1,11 @@
+jobs:
+
+
+- name: deployGoods
+  job:
+    deploy:
+      contract: goods.sol
+      wait: true
+
+
+
