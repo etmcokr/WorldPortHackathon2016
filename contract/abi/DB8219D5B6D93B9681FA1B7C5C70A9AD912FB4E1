@@ -1,0 +1,1 @@
+[{"constant":false,"inputs":[],"name":"getNname","outputs":[{"name":"name","type":"string"}],"type":"function"},{"constant":false,"inputs":[],"name":"remove","outputs":[],"type":"function"},{"inputs":[{"name":"goodsTypeP","type":"uint256"},{"name":"nameP","type":"string"},{"name":"descriptionP","type":"string"},{"name":"ownerP","type":"address"}],"type":"constructor"}]
