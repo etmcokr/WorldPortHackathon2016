@@ -20,3 +20,9 @@ jobs:
       contract: containers.sol
       wait: true
 
+- name: deployShips
+  job:
+    deploy:
+      contract: ships.sol
+      wait: true
+
