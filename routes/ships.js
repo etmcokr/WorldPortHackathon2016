@@ -27,23 +27,23 @@ router.post('/', function(req, res, next) {
 
 
 router.get('/:address', function(req, res, next) {
-    var address = req.params.address;
-    console.log("get Address : " + address);
-    var shipInfo = blockchain.getShipInfo(address);
-    console.log("Found shipInfo: " + shipInfo);
-    shipInfo.getData(function(error, data) {
-        if (error) {
-            console.log("chips Error: " + error);
-            res.json(error);
-        } else {
-            console.log("get Data: " + JSON.stringify(data));
-            var result = {
-                registrationId: data[0],
-                owner: data[1]
-            };
-            res.json(result);
-        }
-    });
+     var address = req.params.address;
+     console.log("get Address : " + address);
+     var shipInfo = blockchain.getShipInfo(address);
+     console.log("Found shipInfo: " + shipInfo);
+     shipInfo.getData(function(error, data) {
+         if (error) {
+             console.log("chips Error: " + error);
+             res.json(error);
+         } else {
+             console.log("get Data: " + JSON.stringify(data));
+             var result = {
+                 registrationId: data[0],
+                 owner: data[1]
+             };
+             res.json(result);
+         }
+     });
 });
 
 // router.get('/:address', function(req, res, next) {
