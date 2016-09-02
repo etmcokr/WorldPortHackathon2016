@@ -29,7 +29,7 @@ contract ContainerInfo {
    }
 
    function addGoodsInfo (address goods ) {
-       goodsInfo.push (goods);
+       goodsInfo.push(goods);
    }
 
    function getContainerType () returns (uint containerType ) {
@@ -42,11 +42,11 @@ contract ContainerInfo {
    }
 
    function getGoodsInfoLenght () returns (uint len ) {
-       goodsInfo.length;
+       return goodsInfo.length;
    }
 
    function getGoodsInfoAdrFromIndex (uint index)  returns ( address goodsInfoAdr)  {
-	return  address (goodsInfo[index]);
+	    return  address (goodsInfo[index]);
    }
 }
 
