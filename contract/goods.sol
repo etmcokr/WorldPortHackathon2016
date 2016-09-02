@@ -25,11 +25,23 @@ contract GoodsInfo {
      }
    }
 
-   function getNname () returns (string name) {
+   function getName () returns (string name) {
 	return name;
    }
 
+   function getGoodsType () returns (uint goodsType ) {
+	return goodsType;
+   }
 
+   function getDescription () returns (string description) {
+
+      return description;
+   }
+
+   function getOwner () returns (address owner) {
+
+     return owner;
+   }
 }
 
 
@@ -64,15 +76,14 @@ contract Goods is Errors, EventTracker {
         return uid;
      }
 
-   //  function getGoodsInfo (address ui) returns (uint error,  string name, uint goodsType, string description, address owner) {
+     function getGoodsInfo (address ui) returns (uint error, address owner) {
 
-//	if (!goods[ui].valid) {
-//	  return  (RESOURCE_NOT_FOUND, "",0,"", address (this));
-  //      } else {
-    //       GoodsInfo gi =  GoodsInfo (goods [ui].addrInfo);	
-//	  return (NO_ERROR, gi.name, gi.goodsType, gi.description,gi.owner);
-  //      }
-    // }
+	if (!goods[ui].valid) {
+	  return  (RESOURCE_NOT_FOUND, address (this));
+        } else {
+	  return (NO_ERROR, goods[ui].addrInfo);
+        }
+     }
 
 
 
