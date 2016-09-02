@@ -7,6 +7,7 @@ contract ShipInfo {
         string registrationId;
         address[] containerInfo;
         address owner;
+	history events;
 
    function ShipInfo (  string registrationIdP, address ownerP) {
 
@@ -18,8 +19,9 @@ contract ShipInfo {
 	return registrationId;
    }
 
-   function addContainerInfo (address goods ) { 
-       containerInfo.push (goods);
+   function addContainerInfo (address container ) {
+       addEvent (events, ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this)); 
+       containerInfo.push (container);
    }
 
    function getOwner () returns (address owner) {
