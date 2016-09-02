@@ -13,3 +13,10 @@ jobs:
       contract: goods.sol
       instance: GoodsInfo
       wait: true
+
+- name: deployContainers
+  job:
+    deploy:
+      contract: containers.sol
+      wait: true
+
