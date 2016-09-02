@@ -18,11 +18,12 @@ jobs:
   job:
     deploy:
       contract: containers.sol
+      instance: all
       wait: true
 
-- name: deployShips
+- name: deployContainerInfo
   job:
     deploy:
-      contract: ships.sol
+      contract: containers.sol
+      instance: ContainerInfo
       wait: true
-

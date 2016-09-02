@@ -1,27 +1,18 @@
 {
-  "ecmaVersion": 6,
-  "libs": [],
-  "loadEagerly": [
-    "**/*.js"
-  ],
-  "dontLoad": [
-    "**/node_modules/**"
-  ],
-  "plugins": {
-    "node": {
-      "dontLoad": "",
-      "load": "",
-      "modules": ""
-    },
-    "modules": {
-      "dontLoad": "",
-      "load": "",
-      "modules": ""
-    },
-    "es_modules": {},
-    "doc_comment": {
-      "fullDocs": true,
-      "strong": false
-    }
-  }
+     "ecmaVersion": 6,
+     "libs": [],
+     "dontLoad": [
+         "**/node_modules/**"
+     ],
+     "loadEagerly": [
+         "**/*.js"
+     ],
+     "plugins": {
+         "node": {},
+         "modules": {},
+         "es_modules": {},
+         "doc_comment": {
+             "fullDocs": true
+         }
+     }
 }

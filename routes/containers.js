@@ -85,10 +85,7 @@ router.get('/:address/goods', function(req, res, next) {
         for (var i = 0; i < data; i++) {
             itemToCollect.push(i);
         }
-
         console.log("itemToCollect: " + JSON.stringify(itemToCollect));
-
-
         async.map(itemToCollect, function(item, callback) {
             console.log("item: " + item);
             containerInfo.getGoodsInfoAdrFromIndex(item, function(error, data) {
@@ -106,12 +103,48 @@ router.get('/:address/goods', function(req, res, next) {
             }
         });
     });
-
-
-
-
 });
 
+router.get('/:address/goodsdetails', function(req, res, next) {
+    var address = req.params.address;
+    console.log("get Address : " + address);
+    var containerInfo = blockchain.getContainerInfo(address);
+    console.log("do getGoodsInfoLenght");
+    containerInfo.getGoodsInfoLenght(function(error, data) {
+        // hack to make a Array..
+        if (error) {
+            res.json(error);
+            return;
+        }
+        console.log("data size: " + data);
+        var itemToCollect = [];
+        for (var i = 0; i < data; i++) {
+            itemToCollect.push(i);
+        }
+        console.log("itemToCollect: " + JSON.stringify(itemToCollect));
+        async.map(itemToCollect, function(item, callback) {
+            console.log("item: " + item);
+            // collect the item.
+            containerInfo.getGoodsInfoAdrFromIndex(item, function(error, goodsInfoAdr) {
+                console.log("error1:" + error);
+                console.log("goodsInfoAdr:" + goodsInfoAdr);
+                var goodInfo = blockchain.getGoodInfo(goodsInfoAdr);
+                goodInfo.getData(function(error, goodInfoData) {
+                    console.log("Error3:" + error);
+                    console.log("goodInfoData:" + goodInfoData);
+                    callback(error,goodInfoData);
+                });
+                //                callback(error, goodsInfoAdr);
+            });
+        }, function(error, finalResult) {
+            if (error) {
+                res.json(error);
+            } else {
+                res.json(finalResult);
+            }
+        });
+    });
 
+});
 
 module.exports = router;
