@@ -27,7 +27,7 @@ contract ShipInfo {
    }
 
    function getContainerInfoLenght () returns (uint len ) {
-       containerInfo.length;
+      return containerInfo.length;
    }
 
    function getContainerInfoAdrFromIndex (uint index)  returns ( address containerInfoAdr)  {
