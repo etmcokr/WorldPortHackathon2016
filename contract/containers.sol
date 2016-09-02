@@ -6,7 +6,7 @@ contract ContainerInfo {
 
         string id;
 	uint containerType;
-        address [] goodsInfo;
+        address[] goodsInfo;
         address owner;
 
    function ContainerInfo (  string idP,  uint containerTypeP, address ownerP) {
@@ -15,7 +15,32 @@ contract ContainerInfo {
 	containerType = containerTypeP;
 	owner = ownerP;
    }
-}
+
+   function getId () returns (string id) {
+	return id;
+   }
+
+   function addGoodsInfo (address goods ) { 
+       goodsInfo.push (goods);
+   }
+
+   function getContainerType () returns (uint containerType ) {
+       return containerType;
+
+   }
+
+   function getOwner () returns (address owner) {
+      return owner;
+   }
+
+   function getGoodsInfoLenght () returns (uint len ) {
+       goodsInfo.length;
+   }
+
+   function getGoodsInfoAdrFromIndex (uint index)  returns ( address goodsInfoAdr)  {
+	return  address (goodsInfo[index]);
+   }
+} 
 
 
 
@@ -46,7 +71,7 @@ contract Containers is Errors, EventTracker {
         containers[contAddr].valid = true;	
        	containers[contAddr].containerInfoAddr = contAddr; 
 	containerCount = containerCount + 1;
-        
+	return contAddr;        
      }
 
      function getContainerInfo (address idAddr) returns (uint error, address owner) {
