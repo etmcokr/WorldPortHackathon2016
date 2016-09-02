@@ -27,3 +27,12 @@ jobs:
       contract: containers.sol
       instance: ContainerInfo
       wait: true
+
+- name: deployShips
+  job:
+    deploy:
+      contract: ships.sol
+      wait: true
+
+
+

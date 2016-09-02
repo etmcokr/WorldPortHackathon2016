@@ -2,12 +2,12 @@ import "errors.sol";
 import "event_tracker.sol";
 
 
-contract ShipInfo {
+contract ShipInfo  is Errors, EventTracker  {
 
         string registrationId;
         address[] containerInfo;
         address owner;
-	history events;
+	history eventHistory;
 
    function ShipInfo (  string registrationIdP, address ownerP) {
 
@@ -20,7 +20,7 @@ contract ShipInfo {
    }
 
    function addContainerInfo (address container ) {
-       addEvent (events, ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this)); 
+       addEvent (eventHistory, ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this)); 
        containerInfo.push (container);
    }
 
@@ -35,6 +35,16 @@ contract ShipInfo {
    function getContainerInfoAdrFromIndex (uint index)  returns ( address containerInfoAdr)  {
 	return  address (containerInfo[index]);
    }
+
+
+ function getData() constant returns (string idResult, address ownerResult )
+   {
+     idResult = registrationId;
+     ownerResult =owner;
+     return;
+   }
+
+
 } 
 
 
@@ -48,7 +58,7 @@ contract Ships is Errors, EventTracker {
 
      struct ShipInfoList {
 	 bool valid; 
-	 address shipsInfoAddr; 
+	 address shipInfoAddr; 
      } 
 
      function Ships () {
@@ -60,11 +70,11 @@ contract Ships is Errors, EventTracker {
      }
 
      function addShip ( string registrationId , uint containerType)
-                              returns (address containerInfoAddr) {
+                              returns (address shipInfoAddr) {
 
 	address shipAddr = new ShipInfo (registrationId, msg.sender);
-        containers[shipAddr].valregistrationId = true;	
-       	containers[shipAddr].shipInfoAddr = shipAddr; 
+        ships[shipAddr].valid = true;	
+       	ships[shipAddr].shipInfoAddr = shipAddr; 
 	shipCount = shipCount + 1;
 	return shipAddr;        
      }
