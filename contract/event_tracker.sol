@@ -5,17 +5,17 @@ contract EventTracker is Errors {
     uint constant OBJ_GOODS = 100;
     uint constant OBJ_CONTAINER = 101;
      uint constant OBJ_SHIP = 103;
-   
+
     uint constant ACTION_LOAD = 500;
     uint constant ACTION_UNLOAD = 501;
 
     uint constant TO = 1;
-    uint constant FROM = 2; 
+    uint constant FROM = 2;
 
     struct ObjType {
-	address objAddr;
-	uint    objType;
-    } 
+	     address objAddr;
+	      uint    objType;
+    }
 
     struct event_t{
         uint etype;
@@ -38,7 +38,7 @@ contract EventTracker is Errors {
 	thisEvt.objType1.objType = oType1;
         thisEvt.objType1.objAddr = obj1;
       	thisEvt.objType2.objType = oType2;
-	 thisEvt.objType2.objType = oType2; 
+	 thisEvt.objType2.objType = oType2;
         thisEvt.timestamp = block.timestamp;
         return;
     }

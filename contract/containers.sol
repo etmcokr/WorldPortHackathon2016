@@ -2,13 +2,13 @@ import "errors.sol";
 import "event_tracker.sol";
 
 
-contract ContainerInfo is Errors, EventTracker {
+contract ContainerInfo is Errors, EventTracker   {
 
         string id;
 	      uint containerType;
         address[] goodsInfo;
         address owner;
-	history eventHistory;
+	      history eventHistoryContainer;
 
 
    function ContainerInfo (  string idP,  uint containerTypeP, address ownerP) {
@@ -31,7 +31,8 @@ contract ContainerInfo is Errors, EventTracker {
    }
 
    function addGoodsInfo (address goods ) {
-        addEvent (eventHistory, ACTION_LOAD, TO, OBJ_GOODS, goods, OBJ_CONTAINER, address (this));
+
+        addEvent (eventHistoryContainer, ACTION_LOAD, TO, OBJ_GOODS, goods, OBJ_CONTAINER, address (this));
        goodsInfo.push(goods);
    }
 
@@ -80,9 +81,11 @@ contract Containers is Errors, EventTracker {
                               returns (address containerInfoAddr) {
 
 	        address contAddr = new ContainerInfo (id,containerType, msg.sender);
+
           containers[contAddr].valid = true;
        	  containers[contAddr].containerInfoAddr = contAddr;
 	        containerCount = containerCount + 1;
+
 	        return contAddr;
      }
 

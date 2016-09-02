@@ -4,7 +4,7 @@ jobs:
   job:
     deploy:
       contract: goods.sol
-      instance: all
+      instance: Goods
       wait: true
 
 - name: deployGoodInfo
@@ -18,7 +18,7 @@ jobs:
   job:
     deploy:
       contract: containers.sol
-      instance: all
+      instance: Containers
       wait: true
 
 - name: deployContainerInfo
@@ -32,7 +32,12 @@ jobs:
   job:
     deploy:
       contract: ships.sol
+      instance: Ships
       wait: true
 
-
-
+- name: deployShipInfo
+  job:
+    deploy:
+      contract: ships.sol
+      instance: ShipInfo
+      wait: true

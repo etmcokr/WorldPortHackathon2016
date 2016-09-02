@@ -2,12 +2,12 @@ import "errors.sol";
 import "event_tracker.sol";
 
 
-contract ShipInfo  is Errors, EventTracker  {
+contract ShipInfo is Errors, EventTracker  {
 
         string registrationId;
         address[] containerInfo;
         address owner;
-	history eventHistory;
+	      history eventHistoryShip;
 
    function ShipInfo (  string registrationIdP, address ownerP) {
 
@@ -20,7 +20,8 @@ contract ShipInfo  is Errors, EventTracker  {
    }
 
    function addContainerInfo (address container ) {
-       addEvent (eventHistory, ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this)); 
+
+       addEvent (eventHistoryShip, ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this));
        containerInfo.push (container);
    }
 
@@ -37,6 +38,7 @@ contract ShipInfo  is Errors, EventTracker  {
    }
 
 
+
  function getData() constant returns (string idResult, address ownerResult )
    {
      idResult = registrationId;
@@ -45,7 +47,7 @@ contract ShipInfo  is Errors, EventTracker  {
    }
 
 
-} 
+}
 
 
 
@@ -54,39 +56,39 @@ contract Ships is Errors, EventTracker {
 
      uint shipCount=0;
 
-     mapping (address => ShipInfoList) ships; 
+     mapping (address => ShipInfoList) ships;
 
      struct ShipInfoList {
-	 bool valid; 
-	 address shipInfoAddr; 
-     } 
+	      bool valid;
+	      address shipInfoAddr;
+     }
+
 
      function Ships () {
          shipCount=0;
      }
 
      function getShipCount () constant returns (uint retVal) {
-	return shipCount;
+	      return shipCount;
      }
 
      function addShip ( string registrationId , uint containerType)
                               returns (address shipInfoAddr) {
-
-	address shipAddr = new ShipInfo (registrationId, msg.sender);
-        ships[shipAddr].valid = true;	
-       	ships[shipAddr].shipInfoAddr = shipAddr; 
-	shipCount = shipCount + 1;
-	return shipAddr;        
+	      address shipAddr = new ShipInfo (registrationId, msg.sender);
+        ships[shipAddr].valid = true;
+       	ships[shipAddr].shipInfoAddr = shipAddr;
+	      shipCount = shipCount + 1;
+	      return shipAddr;
      }
 
-     function getShipInfo (address registrationIdAddr) returns (uint error, address owner) {
+     /*function getShipInfo (address registrationIdAddr) returns (uint error, address owner) {
 
 	if (!ships[registrationIdAddr].valid) {
 	  return  (RESOURCE_NOT_FOUND, address (this));
         } else {
 	  return (NO_ERROR, ships[registrationIdAddr].shipInfoAddr);
         }
-     }
+     }*/
 
 
 
