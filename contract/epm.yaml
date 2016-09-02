@@ -1,11 +1,15 @@
 jobs:
 
-
 - name: deployGoods
   job:
     deploy:
       contract: goods.sol
+      instance: all
       wait: true
 
-
-
+- name: deployGoodInfo
+  job:
+    deploy:
+      contract: goods.sol
+      instance: GoodsInfo
+      wait: true

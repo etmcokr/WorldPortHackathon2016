@@ -1,0 +1,17 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": false,
+  "hostname": "192.168.204.128",
+  "port": "22",
+  "target": "code/worldporthackathon2016",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**",
+    "node_modules/**"
+  ],
+  "username": "etmcokr",
+  "password": "Kipkorn1!",
+  "watch": [],
+  "transport": "scp"
+}
