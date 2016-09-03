@@ -58,13 +58,14 @@ contract ContainerInfo is Errors, EventTracker   {
         return eventHistoryContainer.length;
     }
 
-    function getEvent (uint index) returns  ( uint etype, uint edirection, uint oType1, address obj1, uint oType2, address obj2  ) {
-	return (eventHistoryContainer.events[index].etype, 
-                eventHistoryContainer.events[index].direction, 
-                eventHistoryContainer.events[index].objType1.objType,
-                 eventHistoryContainer.events[index].objType1.objAddr, 
-                 eventHistoryContainer.events[index].objType2.objType , 
-                 eventHistoryContainer.events[index].objType2.objAddr);
+    function getEvent (uint index) returns  ( uint etypeR, uint edirectionR, uint oType1R, address obj1R, uint oType2R, address obj2R  ) {
+	etypeR = eventHistoryContainer.events[index].etype; 
+        edirectionR = eventHistoryContainer.events[index].direction;
+        oType1R = eventHistoryContainer.events[index].objType1.objType;
+        obj1R = eventHistoryContainer.events[index].objType1.objAddr; 
+        oType2R = eventHistoryContainer.events[index].objType2.objType ;
+        obj2R =  eventHistoryContainer.events[index].objType2.objAddr;
+	return;
      }
 }
 
