@@ -8,22 +8,28 @@ contract GoodsInfo {
    string name;
    address owner;
    string description;
-
+   string origin;
+   string destination;
 
  // Constructor
-   function GoodsInfo (uint goodsTypeP, string nameP, string descriptionP,address ownerP){
+   function GoodsInfo (uint goodsTypeP, string nameP, string descriptionP,string originP, string destinationP,address ownerP){
      goodsType = goodsTypeP;
      name = nameP;
      owner = ownerP;
      description = descriptionP;
+     origin = originP;
+     destination = destinationP;
    }
 
-   function getData() constant returns (uint goodsTypeResult, string nameResult, address ownerResult, string descriptionResult )
+   function getData() constant returns (uint goodsTypeResult, string nameResult, address ownerResult, string descriptionResult,string originResult,string destinationResult )
    {
      goodsTypeResult = goodsType;
      nameResult = name;
      ownerResult =owner;
      descriptionResult = description;
+     originResult = origin;
+     destinationResult = destination;
+
      return;
    }
 
@@ -74,10 +80,10 @@ contract Goods is Errors, EventTracker {
 	return goodsCount;
      }
 
-     function addGoods ( string name, uint goodsType, string description)
+     function addGoods ( string name, uint goodsType, string description, string origin,string destination )
                               returns (address goodsAdr) {
 
-	GoodsInfo gi = new GoodsInfo (goodsType,name, description, msg.sender);
+	GoodsInfo gi = new GoodsInfo (goodsType,name, description, origin, destination, msg.sender);
         address uid =  address (gi);
         goods[uid].addrInfo  =  uid;
          goods[uid].valid = true;
