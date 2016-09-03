@@ -1,0 +1,14 @@
+[
+{
+"registrationId":"9321548",
+"name":"Edith Maersk",
+"origin" :"Shanghai",
+"destination" :"Singapore"
+},
+{
+"registrationId":"9708679",
+"name":"MSC Maya",
+"origin" :"Mumbai",
+"destination" :"Dubai"
+}
+]

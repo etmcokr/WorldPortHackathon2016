@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Customs</title>
+
+    <style>
+        #map {
+            height: 400px;
+            width: 100%
+        }
+    </style>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="theme.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script>
+    function selectVessel(sender) {
+      // unselect currently selected
+      for (var i = 1; i < document.getElementById("vesselList").children.length; i++) {
+        currentElement = document.getElementById("vesselList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+
+      document.getElementById("goodsContainer").hidden=true;
+      document.getElementById("detailsContainer").hidden=true;
+      document.getElementById("containerContainer").hidden=false;
+      sender.className="list-group-item active";
+      console.log(sender.className);
+    }
+
+    function selectContainer(sender) {
+      for (var i = 1; i < document.getElementById("containerList").children.length; i++) {
+        currentElement = document.getElementById("containerList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+      document.getElementById("detailsContainer").hidden=true;
+      document.getElementById("goodsContainer").hidden=false;
+      sender.className="list-group-item active";
+    }
+
+    function selectGood(sender) {
+      for (var i = 1; i < document.getElementById("goodsList").children.length; i++) {
+        currentElement = document.getElementById("goodsList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+
+      document.getElementById("detailsContainer").hidden=false;
+      sender.className="list-group-item active";
+    }
+  </script>
+
+  </head>
+
+  <body>
+    
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Vessels with risky goods</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1></h1>
+        <p>This is the main screen, showing the vessels with goods selected by the automated preliminary risk analysis by the customs</p>
+      </div>
+
+      <div class="page-header">
+        <h1>Select a vessel for more information</h1>
+      </div>
+      <div class="row">
+        <!-- /.col-sm-4 -->
+        <div class="col-sm-4" id="vesselContainer">
+          <div class="list-group" id="vesselList">
+            <h3 class="list-group-item active">Vessels</h3>
+            <a href="#containerContainer" onclick="selectVessel(this)" class="list-group-item" >TRF MEMPHIS</a>
+            <a href="#containerContainer" onclick="selectVessel(this)" class="list-group-item">VLAKE</a>
+            <a href="#containerContainer" onclick="selectVessel(this)" class="list-group-item">MONGOLIA</a>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4" id="containerContainer" hidden=true>
+          <div class="list-group" id="containerList">
+            <h3 class="list-group-item active">Containers</h3>
+            <a href="#goodsContainer" onclick="selectContainer(this)" class="list-group-item">123</a>
+            <a href="#goodsContainer" onclick="selectContainer(this)" class="list-group-item">456</a>
+            <a href="#goodsContainer" onclick="selectContainer(this)" class="list-group-item">789</a>
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4" id="goodsContainer" hidden=true>
+          <div class="list-group" id="goodsList">
+            <h3 class="list-group-item active">Goods</h3>
+            <a href="#detailsContainer" onclick="selectGood(this)" class="list-group-item">123</a>
+            <a href="#detailsContainer" onclick="selectGood(this)" class="list-group-item">456</a>
+            <a href="#detailsContainer" onclick="selectGood(this)" class="list-group-item">789</a>
+          </div>
+        </div><!-- /.col-sm-4 -->
+
+
+      </div>
+          <div class="panel panel-warning" id="detailsContainer" hidden=true>
+            <div class="panel-heading">
+              <h3 class="panel-title">Details - Good 456</h3>
+            </div>
+            <div class="panel-body">
+              <b>Origin:</b> Singapore
+              <br>
+              <b>Destination:</b> Montréal
+              <br>
+              <br>
+              <b>Type:</b> Car parts
+              <br>
+              <b>Description:</b> Blah blah blah
+              <br>
+              <div id="map"></div>
+            </div>
+          </div>
+
+
+
+    </div> <!-- /container -->
+
+<div id="map"></div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap/assets/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- Map -->
+
+    
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyDT9AZjv4zK8_EuYvErsRN5TqGB0tAK7p0"></script>
+    <script type="text/javascript">
+        var element = document.getElementById("map");
+
+        /*
+        Build list of map types.
+        You can also use var mapTypeIds = ["roadmap", "satellite", "hybrid", "terrain", "OSM"]
+        but static lists sucks when google updates the default list of map types.
+        */
+        var mapTypeIds = [];
+        for(var type in google.maps.MapTypeId) {
+            mapTypeIds.push(google.maps.MapTypeId[type]);
+        }
+        mapTypeIds.push("OSM");
+        var map = new google.maps.Map(element, {
+            center: new google.maps.LatLng(51.884955, 4.4264355),
+            zoom: 11,
+            mapTypeId: "OSM",
+            mapTypeControlOptions: {
+                mapTypeIds: mapTypeIds
+            }
+        });
+
+        map.mapTypes.set("OSM", new google.maps.ImageMapType({
+            getTileUrl: function(coord, zoom) {
+                // See above example if you need smooth wrapping at 180th meridian
+                return "http://tile.openstreetmap.org/" + zoom + "/" + coord.x + "/" + coord.y + ".png";
+            },
+            //tileSize: new google.maps.Size(688, 400),
+            name: "OpenStreetMap",
+            maxZoom: 18
+        }));
+    </script>
+
+
+  </body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Customs</title>
+
+    <!-- Map -->
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            margin: auto;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.css" />
+    <script src="https://npmcdn.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="theme.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="bootstrap/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script>
+    var vessel;
+    var containerr;
+    var good;
+    var goodsss;
+    var selectedGoodIndex;
+    function getVessel(vesselId){
+	var url="http://ec2-54-152-169-198.compute-1.amazonaws.com:3000/api/ships/af1c2dc9-30f9-6e57-52da-5a17bd441a27"
+	url="ships.json"
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+		//console.log(this.responseText);
+		vessels = JSON.parse(this.responseText);
+		
+		//console.log(vesselContainer);
+		for (var i = 0; i < vessels.length; i++ ) {
+		    var vesselElement = document.createElement("a");
+		    vesselElement.className="list-group-item";
+		    vesselElement.innerHTML=vessels[i].name;
+		    vesselElement.href="#containerContainer";
+		    vesselElement.onclick=function(){selectVessel(vesselElement)};
+		    container.appendChild(vesselElement);
+		    vessel=vessels;
+		}
+		
+	    }
+	};
+	xhttp.open("POST", url, true);
+	xhttp.send();
+    }
+
+    function getVessels() {
+	container = document.getElementById("vesselList");
+        //console.log(vessel);
+	console.log(container.hidden);
+	if (container.hidden == true) {
+	    console.log("itt");
+	    container.hidden = false;
+	var url="http://ec2-54-152-169-198.compute-1.amazonaws.com:3000/api/ships/"
+	url="ships.json"
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+		//console.log(this.responseText);
+		vessels = JSON.parse(this.responseText);
+		vessel = vessels;
+		//console.log(vesselContainer);
+		for (var i = 0; i < vessels.length; i++ ) {
+		    var vesselElement = document.createElement("a");
+		    vesselElement.className="list-group-item";
+		    vesselElement.innerHTML=vessels[i].name;
+		    vesselElement.href="#containerContainer";
+		    vesselElement.onclick=function(){selectVessel(vesselElement)};
+		    container.appendChild(vesselElement);
+		}
+		
+	    }
+	};
+	xhttp.open("POST", url, true);
+	xhttp.send();
+
+	}
+
+    }
+
+    function getGood(goodId) {
+	console.log("getGood-");
+		//container = document.getElementById("goodsList");
+	var goodIdea = good[goodId];
+	var url="http://ec2-54-152-169-198.compute-1.amazonaws.com:3000/api/goods/"+goodIdea;
+//	url="goods.json"
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+		console.log(this.responseText);
+		goodss=JSON.parse(this.responseText);
+		goodsss=goodss;
+		console.log("---" + goodsss.name);
+		
+		document.getElementById("detailsTitle").innerHTML=goodss.name;
+		document.getElementById("detailsBody").innerHTML="Type: "+ goodss.goodtype  +"<br>Description: " + goodss.description + "<br>Origin: Shanghai<br>Destination: Hamburg<br>ETA: "+ goodss.estimatedTimeOfArrival + "Manufacturer: " + goodss.manufacturer;
+	    }
+	};
+	xhttp.open("GET", url, true);
+	xhttp.send();
+    }
+
+    function getGoods(containerId) {
+	console.log("getGoods");
+		container = document.getElementById("goodsList");
+	containerId="9100A5CFDED5EEBBB5A713A4D3D8EBECAE57CAEF"
+	var url="http://ec2-54-152-169-198.compute-1.amazonaws.com:3000/api/containers/"+containerId+"/goods";
+//	url="goods.json"
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+		console.log(this.responseText);
+		goodss=JSON.parse(this.responseText);
+		good=goodss;
+		for (var i = 0; i < goodss.length; i++ ) {
+		    var goodElement = document.createElement("a");
+		    goodElement.className="list-group-item";
+		    goodElement.innerHTML=goodss[i].substr(1,16);
+		    goodElement.href="#containerContainer";
+		    goodElement.onclick=function(){selectGood(goodElement)};
+		    container.appendChild(goodElement);
+		}
+	    }
+	};
+	xhttp.open("GET", url, true);
+	xhttp.send();
+    }
+
+    function getContainers(vesselId){
+	container = document.getElementById("containerList");
+	for (i=1; i<container.children.length; i++) {
+	    container.removeChild(container.children[i]);
+	}
+	url="http://ec2-54-152-169-198.compute-1.amazonaws.com:3000/api/containers/9100A5CFDED5EEBBB5A713A4D3D8EBECAE57CAEF";
+	//url="containers.json"
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+		console.log(this.responseText);
+		containers = JSON.parse(this.responseText);
+		containerr = containers;
+		console.log(containerr);
+		//console.log(vesselContainer);
+		
+		    var containerElement = document.createElement("a");
+		    containerElement.className="list-group-item";
+		    containerElement.innerHTML=containers.containertype;
+		    Element.href="#containerContainer";
+		    containerElement.onclick=function(){selectContainer(containerElement)};
+		    container.appendChild(containerElement);
+		//document.getElementById("detailsTitle").innerHTML=containers.containertype;
+		
+	    }
+	};
+	xhttp.open("GET", url, true);
+	xhttp.send();
+    }
+
+    function showMap(zoom, lat, long) {
+
+        var mapDiv=document.createElement("div");
+        mapDiv.id="map";
+        mapDiv.className="img-thumbnail";
+        document.getElementById("container").appendChild(mapDiv);
+
+        map = L.map('map').setView([51.8903, 4.4403], 15);
+        
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+    }
+    
+    function addPath() {
+        console.log(map);
+        var shanghai = [30.77145, 121.62378];
+	var singapore = [1.28954, 103.76689];
+	var dubai = [25.21375, 55.28970];
+	var mumbai = [18.97785, 72.90078];
+	var rotterdam = [51.89437, 4.42163];
+        var poli = [shanghai, dubai];
+
+	var ship1Path = [shanghai, [22.10484,124.75626], [17.81027,113.85782], [8.40593,111.30899], singapore];
+        var ship1Line = new L.polyline(ship1Path, {color: 'red', weight: 3, opacity: 0.5, smoothfactor: 1});
+	ship1Line.addTo(map);
+	map.fitBounds(ship1Line.getBounds());
+	var ship2Path = [
+          singapore,
+          {lat: 6.35774, lng: 97.33438},
+          {lat: 3.73146, lng: 74.48282},
+          {lat: 24.08545, lng: 62.00235},
+          dubai,
+          {lat: 24.08545, lng: 62.00235},
+          {lat: 17.18159, lng: 61.29923},
+          {lat: 11.73708, lng: 44.42423},
+          {lat: 32.73079, lng: 31.76798},
+          {lat: 38.30620, lng: 10.32266},
+          {lat: 35.63843, lng: -13.75937},
+          {lat: 48.48666, lng: -6.37656},
+          rotterdam
+        ];
+	var ship2Line = new L.polyline(ship2Path, {color: 'blue', weight: 3, opacity: 0.5, smoothfactor: 1});
+	ship2Line.addTo(map);
+	var ship3Path = [
+          mumbai,
+          {lat: 23.92487, lng: 63.40860},
+          dubai,
+          {lat: 21.65627, lng: 63.23282},
+         
+          {lat: 11.56492, lng: 43.72110},
+          {lat: 32.28608, lng: 29.83438},
+          {lat: 38.30620, lng: 10.32266},
+          {lat: 35.63843, lng: -13.75937},
+          {lat: 48.48666, lng: -6.37656},
+          rotterdam
+        ];
+	var ship3Line = L.polyline(ship3Path, {color: 'yellow', weight: 3, opacity: 0.5, smoothfactor: 1});
+//	ship3Line.addTo(map);
+        //map.addLayer("polyLine");
+    }
+
+    function hideMap() {
+        console.log("hideMap");
+//        document.getElementById("map").hidden=true;
+        var parent = document.getElementById("container");
+        parent.removeChild(parent.lastChild);
+//        for (var i = 0; i < parent.childNodes.length; i++) {
+//            if (parent.childNodes[i].id="mapp") {
+//                mapIndex = i;
+///            }
+//        }
+//        console.log(mapIndex);
+        //parent.removeChild(parent.childNodes[mapIndex]);
+    }
+
+    function selectVessel(sender) {
+      // unselect currently selected
+      for (var i = 1; i < document.getElementById("vesselList").children.length; i++) {
+        currentElement = document.getElementById("vesselList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+      for (var i = 1; i < document.getElementById("containerList").children.length; i++) {
+        currentElement = document.getElementById("containerList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+
+      if (document.getElementById("map") != null) {
+          hideMap();
+      }
+      document.getElementById("goodsList").hidden=true;
+      document.getElementById("detailsContainer").hidden=false;
+      document.getElementById("containerList").hidden=false;
+      document.getElementById("detailsBody").innerHTML="Registration ID: "+ vessel[1].registrationId  +"<br>Origin: "+ vessel[1].origin  +"<br>Destination: "+ vessel[1].destination;
+      document.getElementById("detailsTitle").innerHTML=vessel[1].name;
+
+      // Get container list here
+      getContainers();
+
+      sender.className="list-group-item active";
+      console.log(sender.className);
+      //console.log(vessel);
+    }
+
+    function selectContainer(sender) {
+	console.log(sender);
+      for (var i = 1; i < document.getElementById("containerList").children.length; i++) {
+        currentElement = document.getElementById("containerList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+      for (var i = 1; i < document.getElementById("goodsList").children.length; i++) {
+        currentElement = document.getElementById("goodsList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+      
+      if (document.getElementById("map") != null) {
+          hideMap();
+      }
+	getGoods();
+
+
+//      document.getElementById("detailsContainer").hidden=true;
+      document.getElementById("goodsList").hidden=false;
+      sender.className="list-group-item active";
+      document.getElementById("detailsTitle").innerHTML=containerr.containertype;
+      document.getElementById("detailsBody").innerHTML="Container type: "+ containerr.id  +"<br>Origin: Shanghai<br>Destination: Frankfurt<br><br>Recent event history:<br>Loaded: Shanghai [Ship1]<br>Unloaded: Singapore [Ship1]<br>Loaded: Singapore [Ship2]<br>Unloaded: Dubai [Ship2]<br>Loaded:Dubai [MSC Maya]<br>";
+      console.log("-------selectContainer end")
+    }
+
+    function selectGood(sender) {
+      for (var i = 1; i < document.getElementById("goodsList").children.length; i++) {
+        currentElement = document.getElementById("goodsList").children[i];
+        currentElement.className="list-group-item";
+        console.log(i);
+      }
+      console.log("booboo");
+      document.getElementById("detailsContainer").hidden=false;
+      sender.className="list-group-item active";
+      if (document.getElementById("map") != null) {
+          hideMap();
+      }
+
+      showMap();
+      addPath();
+      getGood(2);
+    console.log("!_!_!_" + goodsss)
+
+//	document.getElementById("detailsBody").innerHTML="Name: Noodles1<br>Type: 1010<br>Description: Noodles2<br>Origin: Shanghai<br>Destination: Hamburg<br>";
+
+    }
+
+
+    function startHere() {
+	var once=false;
+	getVessels();
+    }
+  </script>
+
+  </head>
+
+  <body onload="startHere()">
+    
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Vessels with risky goods</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main" id="container">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1></h1>
+        <p>This is the main screen, showing the vessels with goods selected by the automated preliminary risk analysis by the customs</p>
+      </div>
+
+      <div class="page-header">
+        <h1>Select a vessel for more information</h1>
+      </div>
+      <div class="row">
+        <!-- /.col-sm-4 -->
+        <div class="col-sm-4" id="vesselContainer">
+          <div class="list-group" id="vesselList" hidden=true>
+            <h3 class="list-group-item active">Vessels</h3>
+	    <!--
+            <a href="#containerContainer" onclick="selectVessel(this)" class="list-group-item" >TRF MEMPHIS</a>
+            <a href="#containerContainer" onclick="selectVessel(this)" class="list-group-item">VLAKE</a>
+            <a href="#containerContainer" onclick="selectVessel(this)" class="list-group-item">MONGOLIA</a>
+	    -->
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4" id="containerContainer">
+          <div class="list-group" id="containerList" hidden=true>
+            <h3 class="list-group-item active">Containers</h3>
+            
+          </div>
+        </div><!-- /.col-sm-4 -->
+        <div class="col-sm-4" id="goodsContainer">
+          <div class="list-group" id="goodsList" hidden=true>
+            <h3 class="list-group-item active">Goods</h3>
+          </div>
+        </div><!-- /.col-sm-4 -->
+
+      </div>
+          <div class="panel panel-warning" id="detailsContainer" hidden=true>
+            <div class="panel-heading">
+              <h3 class="panel-title" id="detailsTitle">Details - Good 456</h3>
+            </div>
+            <div class="panel-body" id="detailsBody">
+              
+            </div>
+          </div>
+
+<!--
+    <div id="map" class="img-thumbnail"></div>
+-->
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bootstrap/assets/js/docs.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+
+  </body>
+</html>
