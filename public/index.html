@@ -57,7 +57,7 @@
 	    if (this.readyState == 4 && this.status == 200) {
 		//console.log(this.responseText);
 		vessels = JSON.parse(this.responseText);
-		
+
 		//console.log(vesselContainer);
 		for (var i = 0; i < vessels.length; i++ ) {
 		    var vesselElement = document.createElement("a");
@@ -68,10 +68,10 @@
 		    container.appendChild(vesselElement);
 		    vessel=vessels;
 		}
-		
+
 	    }
 	};
-	xhttp.open("POST", url, true);
+	xhttp.open("GET", url, true);
 	xhttp.send();
     }
 
@@ -99,7 +99,7 @@
 		    vesselElement.onclick=function(){selectVessel(vesselElement)};
 		    container.appendChild(vesselElement);
 		}
-		
+
 	    }
 	};
 	xhttp.open("POST", url, true);
@@ -122,7 +122,7 @@
 		goodss=JSON.parse(this.responseText);
 		goodsss=goodss;
 		console.log("---" + goodsss.name);
-		
+
 		document.getElementById("detailsTitle").innerHTML=goodss.name;
 		document.getElementById("detailsBody").innerHTML="Type: "+ goodss.goodtype  +"<br>Description: " + goodss.description + "<br>Origin: Shanghai<br>Destination: Hamburg<br>ETA: "+ goodss.estimatedTimeOfArrival + "Manufacturer: " + goodss.manufacturer;
 	    }
@@ -172,7 +172,7 @@
 		containerr = containers;
 		console.log(containerr);
 		//console.log(vesselContainer);
-		
+
 		    var containerElement = document.createElement("a");
 		    containerElement.className="list-group-item";
 		    containerElement.innerHTML=containers.containertype;
@@ -180,7 +180,7 @@
 		    containerElement.onclick=function(){selectContainer(containerElement)};
 		    container.appendChild(containerElement);
 		//document.getElementById("detailsTitle").innerHTML=containers.containertype;
-		
+
 	    }
 	};
 	xhttp.open("GET", url, true);
@@ -195,11 +195,11 @@
         document.getElementById("container").appendChild(mapDiv);
 
         map = L.map('map').setView([51.8903, 4.4403], 15);
-        
+
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
     }
-    
+
     function addPath() {
         console.log(map);
         var shanghai = [30.77145, 121.62378];
@@ -235,7 +235,7 @@
           {lat: 23.92487, lng: 63.40860},
           dubai,
           {lat: 21.65627, lng: 63.23282},
-         
+
           {lat: 11.56492, lng: 43.72110},
           {lat: 32.28608, lng: 29.83438},
           {lat: 38.30620, lng: 10.32266},
@@ -304,7 +304,7 @@
         currentElement.className="list-group-item";
         console.log(i);
       }
-      
+
       if (document.getElementById("map") != null) {
           hideMap();
       }
@@ -351,7 +351,7 @@
   </head>
 
   <body onload="startHere()">
-    
+
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -412,7 +412,7 @@
         <div class="col-sm-4" id="containerContainer">
           <div class="list-group" id="containerList" hidden=true>
             <h3 class="list-group-item active">Containers</h3>
-            
+
           </div>
         </div><!-- /.col-sm-4 -->
         <div class="col-sm-4" id="goodsContainer">
@@ -427,7 +427,7 @@
               <h3 class="panel-title" id="detailsTitle">Details - Good 456</h3>
             </div>
             <div class="panel-body" id="detailsBody">
-              
+
             </div>
           </div>
 
