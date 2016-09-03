@@ -33,28 +33,26 @@ contract ShipInfo is Errors, EventTracker  {
    }
 
    function getContainerInfoIndex (address container)  returns (int retval) {
-	 for (uint i = 0; i< containerInfo.length-1; i++){
-	    address cinfoAdr = address (containerInfo[i]);
-	    if (container == cinfoAdr ) {
-		retval = int (i);
-		return;
-	    }
-         }
-	retval = -1;
-	return ;
+	    /*for (uint i = 0; i < containerInfo.length; i++){
+	       address cinfoAdr = containerInfo[i];
+	        if (container == cinfoAdr ) {
+		          retval = i;
+		          return;
+	        }
+        }*/
+	    //  retval = 999;
+	      return 999;
    }
 
-   function deletetContainerInfoWithAddress (address container)  returns (uint retval) {
-
-	int index = getContainerInfoIndex (container);
-
-        if (index != -1) {
-	    retval = RESOURCE_NOT_FOUND;
-	    return;
-	}
-
+   function deletetContainerInfoWithAddress (address container)  returns (int retval) {
+	    // int index = getContainerInfoIndex (container);
+      // retval=index;
+       /*if (index != -1) {
+	        retval = RESOURCE_NOT_FOUND;
+	         return retval;
+	     }
        retval = removeContainerInfo (uint(index)) ;
- 	return retval;
+ 	     return retval;*/
    }
 
 

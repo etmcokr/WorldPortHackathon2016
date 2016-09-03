@@ -132,7 +132,18 @@ router.get('/:address/goodsdetails', function(req, res, next) {
                 goodInfo.getData(function(error, goodInfoData) {
                     console.log("Error3:" + error);
                     console.log("goodInfoData:" + goodInfoData);
-                    callback(error, goodInfoData);
+                    var result = {
+                        name: goodInfoData[1],
+                        goodtype: goodInfoData[0],
+                        owner: goodInfoData[2],
+                        description: goodInfoData[3],
+                        origin: goodInfoData[4],
+                        destination: goodInfoData[5],
+                        estimatedTimeOfArrival: goodInfoData[6],
+                        manufacturer: goodInfoData[7]
+                    };
+
+                    callback(error, result);
                 });
                 //                callback(error, goodsInfoAdr);
             });

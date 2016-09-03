@@ -12,9 +12,10 @@ router.post('/', function(req, res, next) {
     var description = body.description;
     var origin = body.origin;
     var destination = body.destination;
+    var estimatedTimeOfArrival = body.estimatedTimeOfArrival;
+    var manufacturer = body.manufacturer;
 
-
-    goods.addGoods(name, goodtype, description,origin,destination, function(error, data) {
+    goods.addGoods(name, goodtype, description, origin, destination, estimatedTimeOfArrival, manufacturer, function(error, data) {
         if (error) {
             res.json({
                 err: error
@@ -45,7 +46,9 @@ router.get('/:address', function(req, res, next) {
                 owner: data[2],
                 description: data[3],
                 origin: data[4],
-                destination: data[5]
+                destination: data[5],
+                estimatedTimeOfArrival: data[6],
+                manufacturer: data[7]
             };
             res.json(result);
         }

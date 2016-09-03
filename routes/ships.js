@@ -200,4 +200,31 @@ function getType(type) {
 }
 
 
+router.delete('/:address/containers', function(req, res, next) {
+    var address = req.params.address;
+    console.log("delete Address : " + address);
+    var shipInfo = blockchain.getShipInfo(address);
+    var containdersToRemove = req.body;
+    console.log("containerToremove: " + containdersToRemove);
+    async.each(containdersToRemove, function(address, callback) {
+        console.log("remove: " + address);
+        shipInfo.getContainerInfoIndex(address, function(error,data){
+          console.log("data: "+ data);
+          callback(error,data);
+        });
+    }, function(error, result) {
+        console.log("Error: " + error);
+        console.log("result: " + result);
+        if (error) {
+            res.json(error);
+        } else {
+            res.json({
+                result: result
+            });
+        }
+    });
+});
+
+
+
 module.exports = router;

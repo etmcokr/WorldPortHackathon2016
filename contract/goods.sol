@@ -10,18 +10,22 @@ contract GoodsInfo {
    string description;
    string origin;
    string destination;
+   uint estimatedTimeOfArrival;
+   string manufacturer;
 
  // Constructor
-   function GoodsInfo (uint goodsTypeP, string nameP, string descriptionP,string originP, string destinationP,address ownerP){
+   function GoodsInfo (uint goodsTypeP, string nameP, string descriptionP,string originP, string destinationP, uint estimatedTimeOfArrivalP, string manufacturerP,address ownerP){
      goodsType = goodsTypeP;
      name = nameP;
      owner = ownerP;
      description = descriptionP;
      origin = originP;
      destination = destinationP;
+     estimatedTimeOfArrival = estimatedTimeOfArrivalP;
+     manufacturer = manufacturerP;
    }
 
-   function getData() constant returns (uint goodsTypeResult, string nameResult, address ownerResult, string descriptionResult,string originResult,string destinationResult )
+   function getData() constant returns (uint goodsTypeResult, string nameResult, address ownerResult, string descriptionResult,string originResult,string destinationResult, uint estimatedTimeOfArrivalResult, string manufacturerResult)
    {
      goodsTypeResult = goodsType;
      nameResult = name;
@@ -29,7 +33,8 @@ contract GoodsInfo {
      descriptionResult = description;
      originResult = origin;
      destinationResult = destination;
-
+     estimatedTimeOfArrivalResult = estimatedTimeOfArrival;
+     manufacturerResult = manufacturer;
      return;
    }
 
@@ -80,10 +85,10 @@ contract Goods is Errors, EventTracker {
 	return goodsCount;
      }
 
-     function addGoods ( string name, uint goodsType, string description, string origin,string destination )
+     function addGoods ( string name, uint goodsType, string description, string origin,string destination,uint estimatedTimeOfArrival, string manufacturer )
                               returns (address goodsAdr) {
 
-	GoodsInfo gi = new GoodsInfo (goodsType,name, description, origin, destination, msg.sender);
+	GoodsInfo gi = new GoodsInfo (goodsType,name, description, origin, destination, estimatedTimeOfArrival, manufacturer,msg.sender);
         address uid =  address (gi);
         goods[uid].addrInfo  =  uid;
          goods[uid].valid = true;
