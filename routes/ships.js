@@ -117,7 +117,7 @@ router.get('/:address/events', function(req, res, next) {
     console.log("get Address : " + address);
     var shipInfo = blockchain.getShipInfo(address);
 
-    shipInfo.getEventsLenght(function(error, data) {
+    shipInfo.getEventHistoryLength(function(error, data) {
         // hack to make a Array..
         if (error) {
             res.json(error);
@@ -125,16 +125,26 @@ router.get('/:address/events', function(req, res, next) {
         }
         console.log("data size: " + data);
         var itemToCollect = [];
-        for (var i = 0; i < data; i++) {
+        for (var i = 1; i <= data; i++) {
             itemToCollect.push(i);
         }
         console.log("itemToCollect: " + JSON.stringify(itemToCollect));
         async.map(itemToCollect, function(item, callback) {
             console.log("item: " + item);
-            shipInfo.getEventsFromIndex(item, function(error, data) {
+            shipInfo.getEvent(item, function(error, data) {
                 console.log("error1:" + error);
                 console.log("data:" + data);
-                callback(error, data);
+                var restult = {
+                    type: data[0],
+                    direction: data[1],
+                    type1: data[2],
+                    address1: data[3],
+                    type2: data[4],
+                    address2: data[5],
+                    timestamp: data[6]
+                };
+
+                callback(error, restult);
             });
         }, function(error, resultValue) {
             console.log("Error: " + error);
