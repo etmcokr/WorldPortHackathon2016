@@ -12,6 +12,51 @@ contract ShipInfo is Errors, EventTracker  {
         string origin;
         string destination;
 
+   function removeContainerInfo (uint index) returns (uint retval) {
+
+	if (index >  containerInfo.length) {
+	   retval = PARAMETER_ERROR;
+           return;
+        }
+	address container =  containerInfo[index];
+	if (index >= containerInfo.length) return;
+	for (uint i = index; i< containerInfo.length-1; i++){
+             containerInfo[i] =  containerInfo[i+1];
+        }
+        delete containerInfo[containerInfo.length-1];
+        containerInfo.length--;
+	addEvent (eventHistoryShip, ACTION_UNLOAD, FROM, OBJ_SHIP, address (this), OBJ_CONTAINER, container);
+	 ContainerInfo cInfo = ContainerInfo (container);
+	 cInfo.addEventContainerHistory (ACTION_UNLOAD, FROM, OBJ_SHIP, address (this), OBJ_CONTAINER, container);
+	retval = NO_ERROR;
+	return;
+   } 
+
+   function getContainerInfoIndex (address container)  returns (int retval) {
+	 for (uint i = 0; i< containerInfo.length-1; i++){
+	    address cinfoAdr = address (containerInfo[i]);
+	    if (container == cinfoAdr ) {
+		retval = int (i);
+		return;
+	    } 
+         }
+	retval = -1; 
+	return ;	
+   }
+
+   function deletetContainerInfoWithAddress (address container)  returns (uint retval) {
+
+	int index = getContainerInfoIndex (container);
+
+        if (index != -1) {
+	    retval = RESOURCE_NOT_FOUND;	
+	    return;
+	}
+
+       retval = removeContainerInfo (uint(index)) ;
+ 	return retval;
+   }
+
 
    function ShipInfo (  string registrationIdP,string nameP,address ownerP,string originP, string destinationP) {
 	     registrationId = registrationIdP;
@@ -77,7 +122,7 @@ contract ShipInfo is Errors, EventTracker  {
         return;
      }
 
-
+     
 
 }
 
