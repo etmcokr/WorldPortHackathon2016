@@ -32,8 +32,8 @@ contract ContainerInfo is Errors, EventTracker   {
 
    function addGoodsInfo (address goods ) {
 
-        addEvent (eventHistoryContainer, ACTION_LOAD, TO, OBJ_GOODS, goods, OBJ_CONTAINER, address (this));
-       goodsInfo.push(goods);
+        addEvent(eventHistoryContainer, ACTION_LOAD, TO, OBJ_GOODS, address(goods), OBJ_CONTAINER, address(this));
+        goodsInfo.push(goods);
    }
 
 
@@ -58,13 +58,14 @@ contract ContainerInfo is Errors, EventTracker   {
         return eventHistoryContainer.length;
     }
 
-    function getEvent (uint index) returns  ( uint etypeR, uint edirectionR, uint oType1R, address obj1R, uint oType2R, address obj2R  ) {
-	etypeR = eventHistoryContainer.events[index].etype; 
-        edirectionR = eventHistoryContainer.events[index].direction;
-        oType1R = eventHistoryContainer.events[index].objType1.objType;
-        obj1R = eventHistoryContainer.events[index].objType1.objAddr; 
-        oType2R = eventHistoryContainer.events[index].objType2.objType ;
-        obj2R =  eventHistoryContainer.events[index].objType2.objAddr;
+    function getEvent (uint index) returns  ( uint etypeR, uint edirectionR, uint oType1R, address obj1R, uint oType2R, address obj2R, uint timeR ) {
+	     etypeR = eventHistoryContainer.events[index].etype;
+       edirectionR = eventHistoryContainer.events[index].direction;
+       oType1R = eventHistoryContainer.events[index].objType1.objType;
+       obj1R = eventHistoryContainer.events[index].objType1.objAddr;
+       oType2R = eventHistoryContainer.events[index].objType2.objType ;
+       obj2R =  eventHistoryContainer.events[index].objType2.objAddr;
+       timeR =  eventHistoryContainer.events[index].timestamp;
 	return;
      }
 }

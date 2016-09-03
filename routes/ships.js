@@ -10,8 +10,11 @@ router.post('/', function(req, res, next) {
     var ships = blockchain.getShips();
     var body = req.body;
     var registrationId = body.registrationId;
+    var name = body.name;
+    var origin = body.origin;
+    var destination = body.destination;
 
-    ships.addShip(registrationId, function(error, data) {
+    ships.addShip(registrationId, name,origin,destination,function(error, data) {
         if (error) {
             res.json({
                 err: error
@@ -39,7 +42,10 @@ router.get('/:address', function(req, res, next) {
              console.log("get Data: " + JSON.stringify(data));
              var result = {
                  registrationId: data[0],
-                 owner: data[1]
+                 owner:  data[1],
+                 name:  data[2],
+                 origin: data[3],
+                 destination: data[4]
              };
              res.json(result);
          }

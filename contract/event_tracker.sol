@@ -34,11 +34,11 @@ contract EventTracker is Errors {
         hist.length = hist.length + 1;
         event_t thisEvt = hist.events[hist.length];
         thisEvt.etype = etype;
-	 thisEvt.direction = edirection;
-	thisEvt.objType1.objType = oType1;
+	      thisEvt.direction = edirection;
+	      thisEvt.objType1.objType = oType1;
         thisEvt.objType1.objAddr = obj1;
       	thisEvt.objType2.objType = oType2;
-	 thisEvt.objType2.objType = oType2;
+	      thisEvt.objType2.objAddr = obj2;
         thisEvt.timestamp = block.timestamp;
         return;
     }

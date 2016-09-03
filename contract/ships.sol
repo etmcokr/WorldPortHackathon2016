@@ -5,14 +5,20 @@ import "event_tracker.sol";
 contract ShipInfo is Errors, EventTracker  {
 
         string registrationId;
+        string name;
         address[] containerInfo;
         address owner;
 	      history eventHistoryShip;
+        string origin;
+        string destination;
 
-   function ShipInfo (  string registrationIdP, address ownerP) {
 
-	registrationId = registrationIdP;
-	owner = ownerP;
+   function ShipInfo (  string registrationIdP,string nameP,address ownerP,string originP, string destinationP) {
+	     registrationId = registrationIdP;
+	     owner = ownerP;
+       name = nameP;
+       origin = originP;
+       destination = destinationP;
    }
 
    function getId () returns (string registrationId) {
@@ -39,10 +45,13 @@ contract ShipInfo is Errors, EventTracker  {
 
 
 
- function getData() constant returns (string idResult, address ownerResult )
+ function getData() constant returns (string idResult, address ownerResult, string nameResult, string originResult, string destinationResult)
    {
      idResult = registrationId;
      ownerResult =owner;
+     nameResult = name;
+     originResult = origin;
+     destinationResult = destination;
      return;
    }
 
@@ -72,9 +81,9 @@ contract Ships is Errors, EventTracker {
 	      return shipCount;
      }
 
-     function addShip ( string registrationId , uint containerType)
+     function addShip ( string registrationId , string name, string origin,string destination)
                               returns (address shipInfoAddr) {
-	      address shipAddr = new ShipInfo (registrationId, msg.sender);
+	      address shipAddr = new ShipInfo (registrationId,name, msg.sender,origin, destination);
         ships[shipAddr].valid = true;
        	ships[shipAddr].shipInfoAddr = shipAddr;
 	      shipCount = shipCount + 1;

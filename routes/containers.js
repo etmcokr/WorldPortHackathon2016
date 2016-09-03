@@ -132,7 +132,7 @@ router.get('/:address/goodsdetails', function(req, res, next) {
                 goodInfo.getData(function(error, goodInfoData) {
                     console.log("Error3:" + error);
                     console.log("goodInfoData:" + goodInfoData);
-                    callback(error,goodInfoData);
+                    callback(error, goodInfoData);
                 });
                 //                callback(error, goodsInfoAdr);
             });
@@ -145,6 +145,55 @@ router.get('/:address/goodsdetails', function(req, res, next) {
         });
     });
 
+});
+
+
+router.get('/:address/events', function(req, res, next) {
+    var address = req.params.address;
+    console.log("get Address : " + address);
+    var containerInfo = blockchain.getContainerInfo(address);
+
+    containerInfo.getEventHistoryLength(function(error, data) {
+        // hack to make a Array..
+        if (error) {
+            res.json(error);
+            return;
+        }
+        console.log("data size: " + data);
+        var itemToCollect = [];
+        for (var i = 1; i <= data; i++) {
+            itemToCollect.push(i);
+        }
+        console.log("itemToCollect: " + JSON.stringify(itemToCollect));
+        async.map(itemToCollect, function(item, callback) {
+            console.log("item: " + item);
+            containerInfo.getEvent(item, function(error, data) {
+                console.log("error1:" + error);
+                console.log("data:" + data);
+                var restult = {
+                    type: data[0],
+                    direction: data[1],
+                    type1: data[2],
+                    address1: data[3],
+                    type2: data[4],
+                    address2: data[5],
+                    timestamp: data[6]
+                };
+
+                callback(error, restult);
+            });
+        }, function(error, resultValue) {
+            console.log("Error: " + error);
+            console.log("result: " + resultValue);
+            if (error) {
+                res.json(error);
+            } else {
+
+
+                res.json(resultValue);
+            }
+        });
+    });
 });
 
 module.exports = router;
