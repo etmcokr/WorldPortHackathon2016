@@ -1,6 +1,6 @@
 import "errors.sol";
 import "event_tracker.sol";
-
+import "containers.sol";
 
 contract ShipInfo is Errors, EventTracker  {
 
@@ -29,7 +29,13 @@ contract ShipInfo is Errors, EventTracker  {
 
        addEvent (eventHistoryShip, ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this));
        containerInfo.push (container);
+       ContainerInfo cInfo = ContainerInfo (container);
+       cInfo.addEventContainerHistory (ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this)); 
    }
+
+
+
+
 
    function getOwner () returns (address owner) {
       return owner;
@@ -54,6 +60,23 @@ contract ShipInfo is Errors, EventTracker  {
      destinationResult = destination;
      return;
    }
+
+
+    function getEventHistoryLength () returns (uint len ) {
+        return eventHistoryShip.length;
+    }
+
+    function getEvent (uint index) returns  ( uint etypeR, uint edirectionR, uint oType1R, address obj1R, uint oType2R, address obj2R, uint timeR ) {
+       etypeR = eventHistoryShip.events[index].etype;
+       edirectionR = eventHistoryShip.events[index].direction;
+       oType1R = eventHistoryShip.events[index].objType1.objType;
+       obj1R = eventHistoryShip.events[index].objType1.objAddr;
+       oType2R = eventHistoryShip.events[index].objType2.objType ;
+       obj2R =  eventHistoryShip.events[index].objType2.objAddr;
+       timeR =  eventHistoryShip.events[index].timestamp;
+        return;
+     }
+
 
 
 }
