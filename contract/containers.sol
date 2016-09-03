@@ -53,6 +53,19 @@ contract ContainerInfo is Errors, EventTracker   {
    function getGoodsInfoAdrFromIndex (uint index)  returns ( address goodsInfoAdr)  {
 	    return  address (goodsInfo[index]);
    }
+
+    function getEventHistoryLength () returns (uint len ) {
+        return eventHistoryContainer.length;
+    }
+
+    function getEvent (uint index) returns  ( uint etype, uint edirection, uint oType1, address obj1, uint oType2, address obj2  ) {
+	return (eventHistoryContainer.events[index].etype, 
+                eventHistoryContainer.events[index].direction, 
+                eventHistoryContainer.events[index].objType1.objType,
+                 eventHistoryContainer.events[index].objType1.objAddr, 
+                 eventHistoryContainer.events[index].objType2.objType , 
+                 eventHistoryContainer.events[index].objType2.objAddr);
+     }
 }
 
 
@@ -97,9 +110,6 @@ contract Containers is Errors, EventTracker {
 	  return (NO_ERROR, containers[idAddr].containerInfoAddr);
         }
      }
-
-
-
 
 
 }
