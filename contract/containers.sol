@@ -68,9 +68,12 @@ contract ContainerInfo is Errors, EventTracker   {
        timeR =  eventHistoryContainer.events[index].timestamp;
 	return;
      }
+
+    function addEventContainerHistory (uint etype, uint edirection, uint oType1, address obj1, uint oType2, address obj2) {
+         addEvent(eventHistoryContainer, etype, edirection,oType1,obj1,oType2,obj2);	
+    }
+
 }
-
-
 
 
 contract Containers is Errors, EventTracker {
