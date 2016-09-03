@@ -30,7 +30,7 @@ contract ShipInfo is Errors, EventTracker  {
 	 cInfo.addEventContainerHistory (ACTION_UNLOAD, FROM, OBJ_SHIP, address (this), OBJ_CONTAINER, container);
 	retval = NO_ERROR;
 	return;
-   } 
+   }
 
    function getContainerInfoIndex (address container)  returns (int retval) {
 	 for (uint i = 0; i< containerInfo.length-1; i++){
@@ -38,10 +38,10 @@ contract ShipInfo is Errors, EventTracker  {
 	    if (container == cinfoAdr ) {
 		retval = int (i);
 		return;
-	    } 
+	    }
          }
-	retval = -1; 
-	return ;	
+	retval = -1;
+	return ;
    }
 
    function deletetContainerInfoWithAddress (address container)  returns (uint retval) {
@@ -49,7 +49,7 @@ contract ShipInfo is Errors, EventTracker  {
 	int index = getContainerInfoIndex (container);
 
         if (index != -1) {
-	    retval = RESOURCE_NOT_FOUND;	
+	    retval = RESOURCE_NOT_FOUND;
 	    return;
 	}
 
@@ -75,7 +75,7 @@ contract ShipInfo is Errors, EventTracker  {
        addEvent (eventHistoryShip, ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this));
        containerInfo.push (container);
        ContainerInfo cInfo = ContainerInfo (container);
-       cInfo.addEventContainerHistory (ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this)); 
+       cInfo.addEventContainerHistory (ACTION_LOAD, TO, OBJ_CONTAINER, container, OBJ_SHIP, address (this));
    }
 
 
@@ -122,7 +122,7 @@ contract ShipInfo is Errors, EventTracker  {
         return;
      }
 
-     
+
 
 }
 

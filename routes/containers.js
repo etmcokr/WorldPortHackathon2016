@@ -169,14 +169,36 @@ router.get('/:address/events', function(req, res, next) {
             console.log("item: " + item);
             containerInfo.getEvent(item, function(error, data) {
                 console.log("error1:" + error);
-                console.log("data:" + data);
+                console.log("data:" + JSON.stringify(data));
+
+
+                var action = "ACTION_UNKOWN";
+                if (data[0] == "500") {
+                    action = "ACTION_LOAD";
+                }
+                if (data[0] == "501") {
+                    action = "ACTION_UNLOAD";
+                }
+
+                var direction = "UNKOWN";
+                if (data[1] == "1") {
+                    direction = "TO";
+                }
+                if (data[1] == "2") {
+                    direction = "FROM";
+                }
+
                 var restult = {
-                    type: data[0],
-                    direction: data[1],
-                    type1: data[2],
-                    address1: data[3],
-                    type2: data[4],
-                    address2: data[5],
+                    action: action,
+                    object1: {
+                        type: getType(data[2]),
+                        address: data[3]
+                    },
+                    direction: direction,
+                    object2: {
+                        type: getType(data[4]),
+                        address: data[5]
+                    },
                     timestamp: data[6]
                 };
 
@@ -195,5 +217,22 @@ router.get('/:address/events', function(req, res, next) {
         });
     });
 });
+
+
+function getType(type) {
+    console.log("Type: " + type);
+
+    if (type == "100") {
+        return "OBJ_GOODS";
+    }
+    if (type == "101") {
+        return "OBJ_CONTAINER";
+    }
+    if (type == "103") {
+        return "OBJ_SHIP";
+    }
+
+    return "OBJ_UNKOWN";
+}
 
 module.exports = router;
