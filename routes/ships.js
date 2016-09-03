@@ -46,6 +46,104 @@ router.get('/:address', function(req, res, next) {
      });
 });
 
+
+router.post('/:address/containers', function(req, res, next) {
+    var address = req.params.address;
+    console.log("get Address : " + address);
+    var shipInfo = blockchain.getShipInfo(address);
+    var containdersToAdd = req.body;
+    console.log("goodsToAdd: " + containdersToAdd);
+    async.each(containdersToAdd, function(address, callback) {
+        console.log("add: " + address);
+        shipInfo.addContainerInfo(address, callback);
+    }, function(error, result) {
+        console.log("Error: " + error);
+        console.log("result: " + result);
+        if (error) {
+            res.json(error);
+        } else {
+            res.json({
+                result: "success"
+            });
+        }
+    });
+});
+
+router.get('/:address/containers', function(req, res, next) {
+    var address = req.params.address;
+    console.log("get Address : " + address);
+    var shipInfo = blockchain.getShipInfo(address);
+
+    shipInfo.getContainerInfoLenght(function(error, data) {
+        // hack to make a Array..
+        if (error) {
+            res.json(error);
+            return;
+        }
+        console.log("data size: " + data);
+        var itemToCollect = [];
+        for (var i = 0; i < data; i++) {
+            itemToCollect.push(i);
+        }
+        console.log("itemToCollect: " + JSON.stringify(itemToCollect));
+        async.map(itemToCollect, function(item, callback) {
+            console.log("item: " + item);
+            shipInfo.getContainerInfoAdrFromIndex(item, function(error, data) {
+                console.log("error1:" + error);
+                console.log("data:" + data);
+                callback(error, data);
+            });
+        }, function(error, resultValue) {
+            console.log("Error: " + error);
+            console.log("result: " + resultValue);
+            if (error) {
+                res.json(error);
+            } else {
+                res.json(resultValue);
+            }
+        });
+    });
+});
+
+
+router.get('/:address/events', function(req, res, next) {
+    var address = req.params.address;
+    console.log("get Address : " + address);
+    var shipInfo = blockchain.getShipInfo(address);
+
+    shipInfo.getEventsLenght(function(error, data) {
+        // hack to make a Array..
+        if (error) {
+            res.json(error);
+            return;
+        }
+        console.log("data size: " + data);
+        var itemToCollect = [];
+        for (var i = 0; i < data; i++) {
+            itemToCollect.push(i);
+        }
+        console.log("itemToCollect: " + JSON.stringify(itemToCollect));
+        async.map(itemToCollect, function(item, callback) {
+            console.log("item: " + item);
+            shipInfo.getEventsFromIndex(item, function(error, data) {
+                console.log("error1:" + error);
+                console.log("data:" + data);
+                callback(error, data);
+            });
+        }, function(error, resultValue) {
+            console.log("Error: " + error);
+            console.log("result: " + resultValue);
+            if (error) {
+                res.json(error);
+            } else {
+                res.json(resultValue);
+            }
+        });
+    });
+});
+
+
+
 // router.get('/:address', function(req, res, next) {
 //     var address = req.params.address;
 //     console.log("get Address : " + address);
